@@ -1,8 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:gmail_manager/components/textfield.dart';
+
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
+
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      backgroundColor: Colors.grey[300],
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            children: [
+              SizedBox(height: 50),
+              // logo
+              Icon(Icons.lock, size: 100),
+
+              //empty space
+              SizedBox(height: 50),
+
+              // Greeting
+              Text(
+                "Welcome Back",
+                style: TextStyle(color: Colors.grey[700], fontSize: 25),
+              ),
+              //empty space
+              SizedBox(height: 25),
+
+              //username
+              UITextField(),
+
+              //empty space
+              SizedBox(height: 25),
+
+              // password
+              UITextField(),
+              
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
