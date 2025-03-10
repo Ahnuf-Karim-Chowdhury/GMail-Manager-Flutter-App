@@ -20,6 +20,7 @@ class LoginPage extends StatelessWidget {
       body: SafeArea(
         child: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(height: 50),
               // logo
@@ -81,7 +82,7 @@ class LoginPage extends StatelessWidget {
 
               // OR divider
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25 ),
+                padding: const EdgeInsets.symmetric(horizontal: 25),
                 child: Row(
                   children: [
                     Expanded(
@@ -105,15 +106,40 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
 
+              //empty space
+              SizedBox(height: 30),
+
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   //google log in
                   SquareTile(imagePath: "lib/icons/google.svg"),
 
-                  //
+                  SizedBox(width: 25),
 
+                  //github log in
+                  SquareTile(imagePath: "lib/icons/github.svg"),
                 ],
-              )
+              ),
+
+              //empty space
+              SizedBox(height: 20),
+
+              //Don't have an account
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Don't have an account?"),
+                  SizedBox(width: 4),
+                  Text(
+                    "Register",
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
