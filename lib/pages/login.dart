@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gmail_manager/components/textfield.dart';
 
-
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+  LoginPage({super.key});
+
+  // text controllers
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,14 +31,21 @@ class LoginPage extends StatelessWidget {
               SizedBox(height: 25),
 
               //username
-              UITextField(),
+              UITextField(
+                controller: usernameController,
+                hintText: "UserName",
+                obscureText: false,
+              ),
 
               //empty space
               SizedBox(height: 25),
 
               // password
-              UITextField(),
-              
+              UITextField(
+                controller: passwordController,
+                hintText: "Password",
+                obscureText: true,
+              ),
             ],
           ),
         ),
