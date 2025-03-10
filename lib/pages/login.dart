@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gmail_manager/components/button.dart';
+import 'package:gmail_manager/components/squareTile.dart';
 import 'package:gmail_manager/components/textfield.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -107,7 +108,7 @@ class LoginPage extends StatelessWidget {
               Row(
                 children: [
                   //google log in
-                  SvgPicture.asset('lib/icons/google.svg', height: 72,),
+                  SquareTile(imagePath: "lib/icons/google.svg"),
 
                   //
 
