@@ -11,7 +11,7 @@ plugins {
 android {
     namespace = "com.example.gmail_manager"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = "26.3.11579264" //27.0.12077973
+    ndkVersion = "27.2.12479018" //27.0.12077973
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -27,7 +27,7 @@ android {
         applicationId = "com.example.gmail_manager"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = flutter.minSdkVersion
+        minSdk = 23 // Update this line to minSdkVersion 23
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
