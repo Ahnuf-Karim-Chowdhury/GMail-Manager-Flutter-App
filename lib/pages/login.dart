@@ -23,20 +23,17 @@ class _LoginPageState extends State<LoginPage> {
   //functions
   void signIn() async {
     // Functions for showing error messages
-    void wrongEmailMessage() {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(title: Text('Incorrect Email!'));
-        },
-      );
-    }
 
-    void wrongPasswordMessage() {
+    void showErrorMessage(String msg) {
       showDialog(
         context: context,
         builder: (context) {
-          return AlertDialog(title: Text('Incorrect Password!'));
+          return AlertDialog(
+            backgroundColor: Colors.deepPurple,
+            title: Center(
+              child: Text(msg, style: TextStyle(color: Colors.white)),
+            ),
+          );
         },
       );
     }
@@ -68,11 +65,7 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.pop(context);
       }
 
-      if (e.code == 'user-not-found') {
-        wrongEmailMessage();
-      } else if (e.code == 'wrong-password') {
-        wrongPasswordMessage();
-      }
+      showErrorMessage(e.code);
 
       logger.e('Error signing in: $e');
     }
