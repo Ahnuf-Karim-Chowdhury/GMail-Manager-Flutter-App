@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gmail_manager/pages/home.dart';
-import 'package:gmail_manager/pages/login.dart';
+import 'package:gmail_manager/pages/loginOrRegister.dart';
 
 
 class AuthPage extends StatelessWidget {
@@ -19,7 +19,7 @@ class AuthPage extends StatelessWidget {
           }
           // user not logged in
           else {
-            return LoginPage();
+            return LoginOrRegisterPage();
           }
         },
       ),

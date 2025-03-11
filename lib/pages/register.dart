@@ -1,19 +1,19 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:logger/logger.dart';
 import 'package:gmail_manager/components/button.dart';
 import 'package:gmail_manager/components/squareTile.dart';
 import 'package:gmail_manager/components/textfield.dart';
 
-class LoginPage extends StatefulWidget {
+class RegisterPage extends StatefulWidget {
   final Function()? onTap;
-  const LoginPage({super.key, required this.onTap});
+  const RegisterPage({super.key, required this.onTap});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends State<RegisterPage> {
   // text controllers
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -21,8 +21,7 @@ class _LoginPageState extends State<LoginPage> {
   // Initialize the logger
   final Logger logger = Logger();
 
-  //functions
-  void signIn() async {
+  void signUp() async {
     // Functions for showing error messages
 
     void showErrorMessage(String msg) {
@@ -137,6 +136,22 @@ class _LoginPageState extends State<LoginPage> {
                     //empty space
                     SizedBox(height: height * 0.02),
 
+                    // confirm password
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: width * 0.08),
+                      child: Container(
+                        width: width * 0.85,
+                        child: UITextField(
+                          controller: passwordController,
+                          hintText: "Confirm Password",
+                          obscureText: true,
+                        ),
+                      ),
+                    ),
+
+                    //empty space
+                    SizedBox(height: height * 0.02),
+
                     // forgot Password
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: width * 0.08),
@@ -157,7 +172,7 @@ class _LoginPageState extends State<LoginPage> {
                     // Sign In Button
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: width * 0.3),
-                      child: UIButton(onTap: signIn),
+                      child: UIButton(onTap: signUp),
                     ),
 
                     //empty space
@@ -221,12 +236,12 @@ class _LoginPageState extends State<LoginPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Don't have an account?"),
+                        Text("Already have an account?"),
                         SizedBox(width: width * 0.01),
                         GestureDetector(
                           onTap: widget.onTap,
                           child: Text(
-                            "Register",
+                            "LogIn",
                             style: TextStyle(
                               color: Colors.blue,
                               fontWeight: FontWeight.bold,
