@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gmail_manager/components/button.dart';
 import 'package:gmail_manager/components/squareTile.dart';
 import 'package:gmail_manager/components/textfield.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
