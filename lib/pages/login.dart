@@ -1,18 +1,23 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gmail_manager/components/button.dart';
 import 'package:gmail_manager/components/squareTile.dart';
 import 'package:gmail_manager/components/textfield.dart';
 
-
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
 
   // text controllers
-  final usernameController = TextEditingController();
+  final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
   //functions
-  void signIn() {}
+  void signIn() async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: emailController.text,
+      password: passwordController.text,
+    );
+  }
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +44,7 @@ class LoginPage extends StatelessWidget {
 
               //username
               UITextField(
-                controller: usernameController,
+                controller: emailController,
                 hintText: "UserName",
                 obscureText: false,
               ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'pages/login.dart';
+import 'package:gmail_manager/pages/auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:gmail_manager/pages/login.dart';
 import 'firebase_options.dart';
 
 void main() async {
