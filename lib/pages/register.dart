@@ -91,11 +91,11 @@ class _LoginPageState extends State<RegisterPage> {
                     Icon(Icons.lock, size: width * 0.2),
 
                     //empty space
-                    SizedBox(height: height * 0.05),
+                    SizedBox(height: height * 0.01),
 
                     // Greeting
                     Text(
-                      "Welcome Back",
+                      "Let's Get Started",
                       style: TextStyle(
                         color: Colors.grey[700],
                         fontSize: width * 0.06,
@@ -150,33 +150,16 @@ class _LoginPageState extends State<RegisterPage> {
                     ),
 
                     //empty space
-                    SizedBox(height: height * 0.02),
-
-                    // forgot Password
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: width * 0.08),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(
-                            "Forgot Password?",
-                            style: TextStyle(color: Colors.grey[600]),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    //empty space
-                    SizedBox(height: height * 0.03),
+                    SizedBox(height: height * 0.04),
 
                     // Sign In Button
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: width * 0.3),
-                      child: UIButton(onTap: signUp),
+                      child: UIButton(onTap: signUp,text: "Sign UP",),
                     ),
 
                     //empty space
-                    SizedBox(height: height * 0.05),
+                    SizedBox(height: height * 0.02),
 
                     // OR divider
                     Padding(
@@ -213,7 +196,7 @@ class _LoginPageState extends State<RegisterPage> {
                     ),
 
                     //empty space
-                    SizedBox(height: height * 0.03),
+                    SizedBox(height: height * 0.02),
 
                     // Row for login options
                     Row(

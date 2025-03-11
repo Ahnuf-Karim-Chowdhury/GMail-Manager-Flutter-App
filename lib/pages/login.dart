@@ -157,7 +157,7 @@ class _LoginPageState extends State<LoginPage> {
                     // Sign In Button
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: width * 0.3),
-                      child: UIButton(onTap: signIn),
+                      child: UIButton(onTap: signIn, text: "Sign In",),
                     ),
 
                     //empty space
