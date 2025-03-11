@@ -1,28 +1,28 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:logger/logger.dart';
 import 'package:gmail_manager/components/button.dart';
 import 'package:gmail_manager/components/squareTile.dart';
 import 'package:gmail_manager/components/textfield.dart';
 
-class LoginPage extends StatefulWidget {
+class RegisterPage extends StatefulWidget {
   final Function()? onTap;
-  const LoginPage({super.key, required this.onTap});
+  const RegisterPage({super.key, required this.onTap});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends State<RegisterPage> {
   // text controllers
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
   // Initialize the logger
   final Logger logger = Logger();
 
-  //functions
-  void signIn() async {
+  void signUp() async {
     // Functions for showing error messages
 
     void showErrorMessage(String msg) {
@@ -49,12 +49,19 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
-      );
+      if (passwordController.text == confirmPasswordController.text) {
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
 
-      logger.i('User signed in successfully');
+        logger.i('User Created successfully');
+      } else {
+        if (mounted) {
+          Navigator.pop(context);
+        }
+        showErrorMessage("Passwordss Don't Match!");
+      }
 
       // pop loading screen
       if (mounted) {
@@ -92,11 +99,11 @@ class _LoginPageState extends State<LoginPage> {
                     Icon(Icons.lock, size: width * 0.2),
 
                     //empty space
-                    SizedBox(height: height * 0.05),
+                    SizedBox(height: height * 0.01),
 
                     // Greeting
                     Text(
-                      "Welcome Back",
+                      "Let's Get Started",
                       style: TextStyle(
                         color: Colors.grey[700],
                         fontSize: width * 0.06,
@@ -137,31 +144,30 @@ class _LoginPageState extends State<LoginPage> {
                     //empty space
                     SizedBox(height: height * 0.02),
 
-                    // forgot Password
+                    // confirm password
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: width * 0.08),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(
-                            "Forgot Password?",
-                            style: TextStyle(color: Colors.grey[600]),
-                          ),
-                        ],
+                      child: Container(
+                        width: width * 0.85,
+                        child: UITextField(
+                          controller: confirmPasswordController,
+                          hintText: "Confirm Password",
+                          obscureText: true,
+                        ),
                       ),
                     ),
 
                     //empty space
-                    SizedBox(height: height * 0.03),
+                    SizedBox(height: height * 0.04),
 
                     // Sign In Button
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: width * 0.3),
-                      child: UIButton(onTap: signIn, text: "Sign In",),
+                      child: UIButton(onTap: signUp, text: "Sign UP"),
                     ),
 
                     //empty space
-                    SizedBox(height: height * 0.05),
+                    SizedBox(height: height * 0.02),
 
                     // OR divider
                     Padding(
@@ -198,7 +204,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
 
                     //empty space
-                    SizedBox(height: height * 0.03),
+                    SizedBox(height: height * 0.02),
 
                     // Row for login options
                     Row(
@@ -221,12 +227,12 @@ class _LoginPageState extends State<LoginPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Don't have an account?"),
+                        Text("Already have an account?"),
                         SizedBox(width: width * 0.01),
                         GestureDetector(
                           onTap: widget.onTap,
                           child: Text(
-                            "Register",
+                            "LogIn",
                             style: TextStyle(
                               color: Colors.blue,
                               fontWeight: FontWeight.bold,
