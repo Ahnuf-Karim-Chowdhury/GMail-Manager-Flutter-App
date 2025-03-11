@@ -17,6 +17,7 @@ class _LoginPageState extends State<RegisterPage> {
   // text controllers
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
   // Initialize the logger
   final Logger logger = Logger();
@@ -48,12 +49,19 @@ class _LoginPageState extends State<RegisterPage> {
     );
 
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
-      );
+      if (passwordController.text == confirmPasswordController.text) {
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
 
-      logger.i('User signed in successfully');
+        logger.i('User Created successfully');
+      } else {
+        if (mounted) {
+          Navigator.pop(context);
+        }
+        showErrorMessage("Passwordss Don't Match!");
+      }
 
       // pop loading screen
       if (mounted) {
@@ -142,7 +150,7 @@ class _LoginPageState extends State<RegisterPage> {
                       child: Container(
                         width: width * 0.85,
                         child: UITextField(
-                          controller: passwordController,
+                          controller: confirmPasswordController,
                           hintText: "Confirm Password",
                           obscureText: true,
                         ),
@@ -155,7 +163,7 @@ class _LoginPageState extends State<RegisterPage> {
                     // Sign In Button
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: width * 0.3),
-                      child: UIButton(onTap: signUp,text: "Sign UP",),
+                      child: UIButton(onTap: signUp, text: "Sign UP"),
                     ),
 
                     //empty space
