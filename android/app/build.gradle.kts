@@ -11,7 +11,7 @@ plugins {
 android {
     namespace = "com.example.gmail_manager"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = "26.3.11579264"
+    ndkVersion = "26.3.11579264" //27.0.12077973
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
