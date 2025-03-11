@@ -5,9 +5,14 @@ import 'package:gmail_manager/components/button.dart';
 import 'package:gmail_manager/components/squareTile.dart';
 import 'package:gmail_manager/components/textfield.dart';
 
-class LoginPage extends StatelessWidget {
-  LoginPage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   // text controllers
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -17,15 +22,59 @@ class LoginPage extends StatelessWidget {
 
   //functions
   void signIn() async {
+    // Functions for showing error messages
+    void wrongEmailMessage() {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(title: Text('Incorrect Email!'));
+        },
+      );
+    }
+
+    void wrongPasswordMessage() {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(title: Text('Incorrect Password!'));
+        },
+      );
+    }
+
+    // loading circle
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return const Center(child: CircularProgressIndicator());
+      },
+    );
+
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: emailController.text,
         password: passwordController.text,
       );
+
       logger.i('User signed in successfully');
-    } catch (e) {
+
+      // pop loading screen
+      if (mounted) {
+        Navigator.pop(context);
+      }
+    } on FirebaseAuthException catch (e) {
+      // pop loading screen
+      if (mounted) {
+        Navigator.pop(context);
+      }
+
+      if (e.code == 'user-not-found') {
+        wrongEmailMessage();
+      } else if (e.code == 'wrong-password') {
+        wrongPasswordMessage();
+      }
+
       logger.e('Error signing in: $e');
-      // You can also show an error message to the user
     }
   }
 
