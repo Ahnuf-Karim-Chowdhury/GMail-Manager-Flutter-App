@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gmail_manager/pages/home.dart';
 import 'package:gmail_manager/pages/loginOrRegister.dart';
-
+import 'package:gmail_manager/pages/verify_email.dart';
 
 class AuthPage extends StatelessWidget {
   const AuthPage({super.key});
@@ -14,12 +14,15 @@ class AuthPage extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           // user logged in
-          if (snapshot.hasData) {
-            return HomePage();
+          if (snapshot.hasData == false) {
+            return LoginOrRegisterPage();
           }
           // user not logged in
           else {
-            return LoginOrRegisterPage();
+            if (snapshot.data?.emailVerified == true) {
+              return HomePage();
+            }
+            return VerifyEmailPage();
           }
         },
       ),
