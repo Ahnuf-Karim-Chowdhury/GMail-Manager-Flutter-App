@@ -115,7 +115,7 @@ class _LoginPageState extends State<LoginPage> {
                         width: width * 0.85,
                         child: UITextField(
                           controller: emailController,
-                          hintText: "UserName",
+                          hintText: "Email",
                           obscureText: false,
                         ),
                       ),
