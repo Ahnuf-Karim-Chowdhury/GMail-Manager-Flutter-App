@@ -12,7 +12,20 @@
           "package_name": "com.example.gmail_manager"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "913689331510-1dsns883ilv390vmcl74tjp0fp8klicq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.gmail_manager",
+            "certificate_hash": "92771ebc487e4d5bbf55cff2508e75972b0b3b68"
+          }
+        },
+        {
+          "client_id": "913689331510-e7oldu56iothr762geqchnra8f7uvic5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyB9F69os0FBXQ0Ey4xaR_gitYc7QQYxIy4"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "913689331510-e7oldu56iothr762geqchnra8f7uvic5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "913689331510-a9gvm8h2ottg16ekkiblvvmn0cgmtn2h.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.gmailManager"
+              }
+            }
+          ]
         }
       }
     }
