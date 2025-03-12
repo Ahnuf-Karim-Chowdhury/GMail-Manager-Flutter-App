@@ -58,3 +58,4 @@ app.*.map.json
 # google auth services
 ios/Runner/GoogleService-Info.plist
 android/app/google-services.json
+ios/Runner/Info.plist

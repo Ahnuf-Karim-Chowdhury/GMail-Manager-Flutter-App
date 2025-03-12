@@ -1,0 +1,12 @@
+com.example.app-browser-1.0.0-0 C:\Users\User\.gradle\caches\8.10.2\transforms\0f6511423a3571c3d431a5427cc4990e\transformed\browser-1.0.0\res
+com.example.app-jetified-play-services-base-17.1.0-1 C:\Users\User\.gradle\caches\8.10.2\transforms\31cb36c06496e4baeba80fd08e5d59e7\transformed\jetified-play-services-base-17.1.0\res
+com.example.app-core-1.0.0-2 C:\Users\User\.gradle\caches\8.10.2\transforms\54bbc9292e215552fb4564479467f824\transformed\core-1.0.0\res
+com.example.app-coordinatorlayout-1.0.0-3 C:\Users\User\.gradle\caches\8.10.2\transforms\616ce76abfc5a91aa0457305bbafb4d3\transformed\coordinatorlayout-1.0.0\res
+com.example.app-jetified-play-services-basement-17.1.0-4 C:\Users\User\.gradle\caches\8.10.2\transforms\99f4e70034f1a6baac43fc713ee5d2c9\transformed\jetified-play-services-basement-17.1.0\res
+com.example.app-pngs-5 G:\- DEv\JavaScript\LANA\Flutter\GMail Manager\gmail_manager\android\build\generated\res\pngs\debug
+com.example.app-resValues-6 G:\- DEv\JavaScript\LANA\Flutter\GMail Manager\gmail_manager\android\build\generated\res\resValues\debug
+com.example.app-packageDebugResources-7 G:\- DEv\JavaScript\LANA\Flutter\GMail Manager\gmail_manager\android\build\intermediates\incremental\debug\packageDebugResources\merged.dir
+com.example.app-packageDebugResources-8 G:\- DEv\JavaScript\LANA\Flutter\GMail Manager\gmail_manager\android\build\intermediates\incremental\debug\packageDebugResources\stripped.dir
+com.example.app-debug-9 G:\- DEv\JavaScript\LANA\Flutter\GMail Manager\gmail_manager\android\build\intermediates\merged_res\debug\mergeDebugResources
+com.example.app-debug-10 G:\- DEv\JavaScript\LANA\Flutter\GMail Manager\gmail_manager\android\src\debug\res
+com.example.app-main-11 G:\- DEv\JavaScript\LANA\Flutter\GMail Manager\gmail_manager\android\src\main\res

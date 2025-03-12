@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">913689331510-e7oldu56iothr762geqchnra8f7uvic5.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">913689331510</string>
+    <string name="google_api_key" translatable="false">AIzaSyB9F69os0FBXQ0Ey4xaR_gitYc7QQYxIy4</string>
+    <string name="google_app_id" translatable="false">1:913689331510:android:ac18a469c9f538ee749597</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyB9F69os0FBXQ0Ey4xaR_gitYc7QQYxIy4</string>
+    <string name="google_storage_bucket" translatable="false">manger-d1123.firebasestorage.app</string>
+    <string name="project_id" translatable="false">manger-d1123</string>
+    <style name="LaunchTheme" parent="@android:style/Theme.Light.NoTitleBar">
+        
+        <item name="android:windowBackground">@drawable/launch_background</item>
+    </style>
+    <style name="NormalTheme" parent="@android:style/Theme.Light.NoTitleBar">
+        <item name="android:windowBackground">?android:colorBackground</item>
+    </style>
+</resources>
