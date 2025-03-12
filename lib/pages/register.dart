@@ -4,6 +4,7 @@ import 'package:logger/logger.dart';
 import 'package:gmail_manager/components/button.dart';
 import 'package:gmail_manager/components/squareTile.dart';
 import 'package:gmail_manager/components/textfield.dart';
+import 'package:gmail_manager/services/auth_service.dart';
 
 class RegisterPage extends StatefulWidget {
   final Function()? onTap;
@@ -211,12 +212,14 @@ class _LoginPageState extends State<RegisterPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         // google log in
-                        SquareTile(imagePath: "lib/icons/google.svg"),
+                        SquareTile(imagePath: "lib/icons/google.svg",
+                        onTap: Authservice().signInWithGoogle()),
 
                         SizedBox(width: width * 0.05),
 
                         // github log in
-                        SquareTile(imagePath: "lib/icons/github.svg"),
+                        SquareTile(imagePath: "lib/icons/github.svg",
+                        onTap: Authservice().signInWithGoogle(),),
                       ],
                     ),
 
