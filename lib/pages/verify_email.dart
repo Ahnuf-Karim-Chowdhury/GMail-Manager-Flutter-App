@@ -15,6 +15,9 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
   final _auth = Authservice();
 
   late Timer timer;
+  late Timer countdownTimer;
+  int _countdown = 60;
+  bool _isResending = false;
 
   @override
   void initState() {
@@ -30,19 +33,33 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
         );
       }
     });
+
+    startCountdown();
+  }
+
+  void startCountdown() {
+    countdownTimer = Timer.periodic(Duration(seconds: 1), (countdownTimer) {
+      if (_countdown > 0) {
+        setState(() {
+          _countdown--;
+        });
+      } else {
+        countdownTimer.cancel();
+      }
+    });
   }
 
   @override
   void dispose() {
     timer.cancel();
+    countdownTimer.cancel();
     super.dispose();
   }
-
-  bool _isResending = false;
 
   void _resendVerificationEmail() async {
     setState(() {
       _isResending = true;
+      _countdown = 60;
     });
 
     // Simulate a network request
@@ -53,6 +70,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
     });
 
     _showConfirmationDialog();
+    startCountdown();
   }
 
   void _showConfirmationDialog() {
@@ -92,20 +110,16 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
               ),
               SizedBox(height: 20),
               ElevatedButton(
-                onPressed: _isResending ? null : _resendVerificationEmail,
-                child:
-                    _isResending
-                        ? CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            Colors.white,
-                          ),
-                        )
-                        : UIButton(
-                          onTap: () async {
-                            _auth.sendEmailVerificationLink();
-                          },
-                          text: 'Resend Verification Email',
+                onPressed: _countdown > 0 ? null : _resendVerificationEmail,
+                child: _isResending
+                    ? CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          Colors.white,
                         ),
+                      )
+                    : Text(_countdown > 0
+                        ? 'Resend Verification Email in $_countdown'
+                        : 'Resend Verification Email'),
               ),
             ],
           ),
