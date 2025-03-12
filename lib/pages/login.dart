@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:gmail_manager/pages/forgot_password.dart';
 import 'package:logger/logger.dart';
 import 'package:gmail_manager/components/button.dart';
 import 'package:gmail_manager/components/squareTile.dart';
@@ -151,7 +152,7 @@ class _LoginPageState extends State<LoginPage> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) {
-                                    return ;
+                                    return ForgotPasswordPage();
                                   },
                                 ),
                               );
