@@ -7,8 +7,9 @@ import 'package:gmail_manager/components/textfield.dart';
 import 'package:gmail_manager/services/auth_service.dart';
 
 class RegisterPage extends StatefulWidget {
+  final _authService = Authservice();
   final Function()? onTap;
-  const RegisterPage({super.key, required this.onTap});
+   RegisterPage({super.key, required this.onTap});
 
   @override
   State<RegisterPage> createState() => _LoginPageState();
@@ -213,13 +214,13 @@ class _LoginPageState extends State<RegisterPage> {
                       children: [
                         // google log in
                         SquareTile(imagePath: "lib/icons/google.svg",
-                        onTap: Authservice().signInWithGoogle()),
+                        onTap: () => Authservice().signInWithGoogle()),
 
                         SizedBox(width: width * 0.05),
 
                         // github log in
                         SquareTile(imagePath: "lib/icons/github.svg",
-                        onTap: Authservice().signInWithGoogle(),),
+                        onTap: () => Authservice().signInWithGoogle(),),
                       ],
                     ),
 
