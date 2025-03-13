@@ -22,8 +22,21 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue, 
-        actions: [IconButton(onPressed: signUserOut, icon: Icon(Icons.logout))],
+        backgroundColor: Colors.blue,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            // Handle back navigation
+            Navigator.pop(context);
+          },
+        ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: signUserOut,
+          ),
+        ],
+        title: Text('Dashboard'),
       ),
       body: Center(
         child: Text("Welcome: ${user.email}"), 

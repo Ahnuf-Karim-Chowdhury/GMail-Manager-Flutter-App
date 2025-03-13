@@ -2,12 +2,12 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:gmail_manager/components/button.dart';
 import 'package:gmail_manager/pages/auth.dart';
 import 'package:gmail_manager/services/auth_service.dart';
 
 class VerifyEmailPage extends StatefulWidget {
   @override
+  // ignore: library_private_types_in_public_api
   _VerifyEmailPageState createState() => _VerifyEmailPageState();
 }
 

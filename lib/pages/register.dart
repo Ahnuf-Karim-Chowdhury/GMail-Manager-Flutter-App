@@ -7,9 +7,8 @@ import 'package:gmail_manager/components/textfield.dart';
 import 'package:gmail_manager/services/auth_service.dart';
 
 class RegisterPage extends StatefulWidget {
-  final _authService = Authservice();
   final Function()? onTap;
-   RegisterPage({super.key, required this.onTap});
+   const RegisterPage({super.key, required this.onTap});
 
   @override
   State<RegisterPage> createState() => _LoginPageState();

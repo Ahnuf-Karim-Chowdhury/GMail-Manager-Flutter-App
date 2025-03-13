@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:gmail_manager/pages/forgot_password.dart';
 import 'package:logger/logger.dart';
 import 'package:gmail_manager/components/button.dart';
 import 'package:gmail_manager/components/squareTile.dart';
@@ -8,9 +9,8 @@ import 'package:gmail_manager/services/auth_service.dart';
 
 class LoginPage extends StatefulWidget {
   final Function()? onTap;
-  
+
   const LoginPage({super.key, required this.onTap});
-  
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -115,7 +115,7 @@ class _LoginPageState extends State<LoginPage> {
                         width: width * 0.85,
                         child: UITextField(
                           controller: emailController,
-                          hintText: "UserName",
+                          hintText: "Email",
                           obscureText: false,
                         ),
                       ),
@@ -146,9 +146,24 @@ class _LoginPageState extends State<LoginPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Text(
-                            "Forgot Password?",
-                            style: TextStyle(color: Colors.grey[600]),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return ForgotPasswordPage();
+                                  },
+                                ),
+                              );
+                            },
+                            child: Text(
+                              "Forgot Password?",
+                              style: TextStyle(
+                                color: Colors.blue,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -160,7 +175,7 @@ class _LoginPageState extends State<LoginPage> {
                     // Sign In Button
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: width * 0.3),
-                      child: UIButton(onTap: signIn, text: "Sign In",),
+                      child: UIButton(onTap: signIn, text: "Sign In"),
                     ),
 
                     //empty space
@@ -208,14 +223,18 @@ class _LoginPageState extends State<LoginPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         // google log in
-                        SquareTile(imagePath: "lib/icons/google.svg",
-                        onTap: () => Authservice().signInWithGoogle(),),
+                        SquareTile(
+                          imagePath: "lib/icons/google.svg",
+                          onTap: () => Authservice().signInWithGoogle(),
+                        ),
 
                         SizedBox(width: width * 0.05),
 
                         // github log in
-                        SquareTile(imagePath: "lib/icons/github.svg",
-                        onTap: () => Authservice().signInWithGoogle()),
+                        SquareTile(
+                          imagePath: "lib/icons/github.svg",
+                          onTap: () => Authservice().signInWithGoogle(),
+                        ),
                       ],
                     ),
 
