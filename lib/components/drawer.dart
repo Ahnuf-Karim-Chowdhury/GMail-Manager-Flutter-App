@@ -43,6 +43,21 @@ class UIDrawer extends StatelessWidget {
                       icon: Icons.person,
                       text: "P R O F I L E",
                     ),
+
+                    // inbox
+                    UIListTile(
+                      onTap: () {
+                        Navigator.pushReplacementNamed(context, '/inbox');
+                      },
+                      icon: Icons.inbox,
+                      text: "I N B O X",
+                    ),
+
+
+
+
+
+
                   ],
                 ),
 

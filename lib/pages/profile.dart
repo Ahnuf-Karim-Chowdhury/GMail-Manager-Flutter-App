@@ -57,7 +57,22 @@ class _ProfilePageState extends State<ProfilePage> {
           SizedBox(height: 50),
 
           // Profile pic
-          Icon(Icons.person, size: 72),
+          if (currentUser?.photoURL != null)
+            CircleAvatar(
+              radius: 36,
+              backgroundImage: NetworkImage(currentUser!.photoURL!),
+              backgroundColor: Colors.grey[200],
+              child: ClipOval(
+                child: Image.network(
+                  currentUser!.photoURL!,
+                  fit: BoxFit.cover,
+                  width: 72,
+                  height: 72,
+                ),
+              ),
+            )
+          else
+            Icon(Icons.person, size: 72),
 
           SizedBox(height: 10),
 
