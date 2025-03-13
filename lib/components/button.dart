@@ -9,7 +9,7 @@ class UIButton extends StatelessWidget {
   final double? paddingWidth;
   final double? fontSize;
 
-  UIButton({
+  const UIButton({
     super.key,
     required this.onTap,
     required this.text,
