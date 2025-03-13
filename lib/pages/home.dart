@@ -1,24 +1,38 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:gmail_manager/components/loading.dart';
 import 'package:logger/logger.dart';
 import 'package:gmail_manager/components/sidebar.dart';
 
-class HomePage extends StatelessWidget {
+
+class HomePage extends StatefulWidget {
   HomePage({super.key});
   final user = FirebaseAuth.instance.currentUser!;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  
-  // logger
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  bool _isLoggingOut = false;
   final Logger logger = Logger();
 
   //sign user out
   void signUserOut(BuildContext context) async {
     bool shouldLogout = await showLogoutConfirmationDialog(context);
     if (shouldLogout) {
+      setState(() {
+        _isLoggingOut = true;
+      });
       try {
         await FirebaseAuth.instance.signOut();
+        Navigator.of(context).pushReplacementNamed('/login');
       } catch (e) {
         logger.e('Error signing out: $e');
+        setState(() {
+          _isLoggingOut = false;
+        });
       }
     }
   }
@@ -36,7 +50,7 @@ class HomePage extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).pop(false); // Cancel
               },
-              child: Text('Cancel',style: TextStyle(color: Colors.black),),
+              child: Text('Cancel', style: TextStyle(color: Colors.black)),
               style: TextButton.styleFrom(
                 backgroundColor: Colors.white,
                 side: BorderSide(color: Colors.white),
@@ -48,7 +62,7 @@ class HomePage extends StatelessWidget {
               },
               child: Text(
                 'LogOut',
-                style: TextStyle(color: Colors.white), // Set LogOut button color to red
+                style: TextStyle(color: Colors.white), // Set LogOut button color to white
               ),
               style: TextButton.styleFrom(
                 backgroundColor: Colors.red,
@@ -64,13 +78,13 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
+      key: widget._scaffoldKey,
       appBar: AppBar(
         backgroundColor: Colors.blue,
         leading: IconButton(
           icon: Icon(Icons.menu),
           onPressed: () {
-            _scaffoldKey.currentState?.openDrawer();
+            widget._scaffoldKey.currentState?.openDrawer();
           },
           splashColor: Colors.white, // Set splash color to white
         ),
@@ -86,8 +100,13 @@ class HomePage extends StatelessWidget {
         title: Text('Dashboard'),
       ),
       drawer: Sidebar(),
-      body: Center(
-        child: Text("Welcome: ${user.email}"), 
+      body: Stack(
+        children: [
+          Center(
+            child: Text("Welcome: ${widget.user.email}"),
+          ),
+          if (_isLoggingOut) LoadingScreen(), // Show loading screen when logging out
+        ],
       ),
     );
   }
