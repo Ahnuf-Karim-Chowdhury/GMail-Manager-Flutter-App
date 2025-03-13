@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logger/logger.dart';
+import 'package:flutter/material.dart';
 
 class Authservice {
   final Logger logger = Logger();
@@ -16,7 +17,7 @@ class Authservice {
     }
   }
 
-  Future<UserCredential?> signInWithGoogle() async {
+  Future<UserCredential?> signInWithGoogle(BuildContext context) async {
     try {
       await _googleSignIn.signOut();
       final GoogleSignInAccount? guser = await _googleSignIn.signIn();
@@ -31,12 +32,17 @@ class Authservice {
         idToken: gauth.idToken,
       );
 
-      return await _auth.signInWithCredential(credential);
+      final UserCredential userCredential = await _auth.signInWithCredential(credential);
+
+      // Redirect to '/home' after successful sign-in
+      if (userCredential.user != null) {
+        Navigator.pushReplacementNamed(context, '/home');
+      }
+
+      return userCredential;
     } catch (e) {
       logger.e('Error signing in with Google: $e');
       return null;
     }
   }
 }
-
-

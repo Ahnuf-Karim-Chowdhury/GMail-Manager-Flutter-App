@@ -11,10 +11,10 @@ class RegisterPage extends StatefulWidget {
    const RegisterPage({super.key, required this.onTap});
 
   @override
-  State<RegisterPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<RegisterPage> {
+class _RegisterPageState extends State<RegisterPage> {
   // text controllers
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -57,11 +57,17 @@ class _LoginPageState extends State<RegisterPage> {
         );
 
         logger.i('User Created successfully');
+
+        // Redirect to '/verify-email' after successful registration
+        if (mounted) {
+          Navigator.pop(context);
+          Navigator.pushReplacementNamed(context, '/verify-email');
+        }
       } else {
         if (mounted) {
           Navigator.pop(context);
         }
-        showErrorMessage("Passwordss Don't Match!");
+        showErrorMessage("Passwords Don't Match!");
       }
 
       // pop loading screen
@@ -212,14 +218,18 @@ class _LoginPageState extends State<RegisterPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         // google log in
-                        SquareTile(imagePath: "lib/icons/google.svg",
-                        onTap: () => Authservice().signInWithGoogle()),
+                        SquareTile(
+                          imagePath: "lib/icons/google.svg",
+                          onTap: () => Authservice().signInWithGoogle(context),
+                        ),
 
                         SizedBox(width: width * 0.05),
 
                         // github log in
-                        SquareTile(imagePath: "lib/icons/github.svg",
-                        onTap: () => Authservice().signInWithGoogle(),),
+                        SquareTile(
+                          imagePath: "lib/icons/github.svg",
+                          onTap: () => Authservice().signInWithGoogle(context),
+                        ),
                       ],
                     ),
 
