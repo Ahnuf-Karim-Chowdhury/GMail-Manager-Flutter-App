@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:gmail_manager/components/drawer.dart';
 import 'package:gmail_manager/components/loading.dart';
+import 'package:gmail_manager/pages/profile.dart';
 import 'package:logger/logger.dart';
-import 'package:gmail_manager/components/sidebar.dart';
-
 
 class HomePage extends StatefulWidget {
   HomePage({super.key});
@@ -11,6 +11,7 @@ class HomePage extends StatefulWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
+  // ignore: library_private_types_in_public_api
   _HomePageState createState() => _HomePageState();
 }
 
@@ -37,42 +38,59 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  // navigate to profile page
+  void goToProfilePage() {
+    Navigator.pop(context);
+
+    // go to profile page
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ProfilePage()),
+    );
+  }
+
   Future<bool> showLogoutConfirmationDialog(BuildContext context) async {
     return await showDialog<bool>(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          backgroundColor: Colors.grey.shade400.withOpacity(0.9), // Adjust transparency here
-          title: Text('LogOut Confirmation'),
-          content: Text('Are you sure you want to LogOut?'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(false); // Cancel
-              },
-              child: Text('Cancel', style: TextStyle(color: Colors.black)),
-              style: TextButton.styleFrom(
-                backgroundColor: Colors.white,
-                side: BorderSide(color: Colors.white),
-              ),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(true); // LogOut
-              },
-              child: Text(
-                'LogOut',
-                style: TextStyle(color: Colors.white), // Set LogOut button color to white
-              ),
-              style: TextButton.styleFrom(
-                backgroundColor: Colors.red,
-                side: BorderSide(color: Colors.red),
-              ),
-            ),
-          ],
-        );
-      },
-    ) ?? false; // Return false if the dialog is dismissed
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              // ignore: deprecated_member_use
+              backgroundColor: Colors.grey.shade400.withOpacity(
+                0.9,
+              ), // Adjust transparency here
+              title: Text('LogOut Confirmation'),
+              content: Text('Are you sure you want to LogOut?'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(false); // Cancel
+                  },
+                  child: Text('Cancel', style: TextStyle(color: Colors.black)),
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    side: BorderSide(color: Colors.white),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(true); // LogOut
+                  },
+                  child: Text(
+                    'LogOut',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ), // Set LogOut button color to white
+                  ),
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.red,
+                    side: BorderSide(color: Colors.red),
+                  ),
+                ),
+              ],
+            );
+          },
+        ) ??
+        false; // Return false if the dialog is dismissed
   }
 
   @override
@@ -80,7 +98,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       key: widget._scaffoldKey,
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.grey[900],
         leading: IconButton(
           icon: Icon(Icons.menu),
           onPressed: () {
@@ -99,13 +117,15 @@ class _HomePageState extends State<HomePage> {
         ],
         title: Text('Dashboard'),
       ),
-      drawer: Sidebar(),
+      drawer: UIDrawer(
+        onLogOut: () => signUserOut(context),  // Corrected this line
+        onProfileTap: goToProfilePage,
+      ),
       body: Stack(
         children: [
-          Center(
-            child: Text("Welcome: ${widget.user.email}"),
-          ),
-          if (_isLoggingOut) LoadingScreen(), // Show loading screen when logging out
+          Center(child: Text("Welcome: ${widget.user.email}")),
+          if (_isLoggingOut)
+            LoadingScreen(), // Show loading screen when logging out
         ],
       ),
     );
