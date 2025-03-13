@@ -33,6 +33,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade200,
       key: widget._scaffoldKey,
       appBar: UIAppBar(
         title: "Dashboard",
