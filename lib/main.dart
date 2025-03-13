@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gmail_manager/pages/auth.dart';
-import 'package:gmail_manager/pages/home.dart'; // Import HomePage
-import 'package:gmail_manager/pages/login.dart'; // Import LoginPage
+import 'package:gmail_manager/pages/home.dart'; 
+import 'package:gmail_manager/pages/loginOrRegister.dart'; 
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       home: AuthPage(),
       routes: {
         '/home': (context) => HomePage(),
-        '/login': (context) => LoginPage(onTap: (){}),
+        '/login': (context) => LoginOrRegisterPage(), // Use LoginOrRegisterPage here
       },
     );
   }
