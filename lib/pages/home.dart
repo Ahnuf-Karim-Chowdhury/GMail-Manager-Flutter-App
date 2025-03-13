@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
+import 'package:gmail_manager/components/sidebar.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -24,10 +25,9 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.blue,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(Icons.menu),
           onPressed: () {
-            // Handle back navigation
-            Navigator.pop(context);
+            Scaffold.of(context).openDrawer();
           },
         ),
         actions: [
@@ -38,6 +38,7 @@ class HomePage extends StatelessWidget {
         ],
         title: Text('Dashboard'),
       ),
+      drawer: SidebarPage(),
       body: Center(
         child: Text("Welcome: ${user.email}"), 
       ),
