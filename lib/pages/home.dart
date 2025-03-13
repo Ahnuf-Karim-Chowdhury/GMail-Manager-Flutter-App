@@ -11,10 +11,12 @@ class HomePage extends StatefulWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
+  // ignore: library_private_types_in_public_api
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  // ignore: prefer_final_fields
   bool _isLoggingOut = false;
 
   // navigate to profile page
@@ -33,7 +35,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       key: widget._scaffoldKey,
       appBar: UIAppBar(
-        
+        title: "Dashboard",
         onMenuTap: () {
           widget._scaffoldKey.currentState?.openDrawer();
         },
@@ -42,7 +44,7 @@ class _HomePageState extends State<HomePage> {
       ),
       drawer: UIDrawer(
         onLogOut: () => UIAppBar(
-          
+          title: "Dashboard",
           onMenuTap: () {},
           onProfileTap: goToProfilePage,
           context: context,
