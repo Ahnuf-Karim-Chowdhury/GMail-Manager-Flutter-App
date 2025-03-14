@@ -59,9 +59,9 @@ class _LoginPageState extends State<LoginPage> {
 
       logger.i('User signed in successfully');
 
-      // pop loading screen
+      // Navigate to home page and pop loading screen
       if (mounted) {
-        Navigator.pop(context);
+        Navigator.pushReplacementNamed(context, '/home');
       }
     } on FirebaseAuthException catch (e) {
       // pop loading screen
@@ -225,7 +225,7 @@ class _LoginPageState extends State<LoginPage> {
                         // google log in
                         SquareTile(
                           imagePath: "lib/icons/google.svg",
-                          onTap: () => Authservice().signInWithGoogle(),
+                          onTap: () => Authservice().signInWithGoogle(context),
                         ),
 
                         SizedBox(width: width * 0.05),
@@ -233,7 +233,7 @@ class _LoginPageState extends State<LoginPage> {
                         // github log in
                         SquareTile(
                           imagePath: "lib/icons/github.svg",
-                          onTap: () => Authservice().signInWithGoogle(),
+                          onTap: () => Authservice().signInWithGoogle(context),
                         ),
                       ],
                     ),

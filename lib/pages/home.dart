@@ -1,45 +1,63 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
+import 'package:gmail_manager/components/drawer.dart';
+import 'package:gmail_manager/components/loading.dart';
+import 'package:gmail_manager/pages/profile.dart';
+import 'package:gmail_manager/components/appbar.dart'; // Import the new AppBar
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   HomePage({super.key});
   final user = FirebaseAuth.instance.currentUser!;
-  
-  // logger
-  final Logger logger = Logger();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  //sign user out
-  void signUserOut() async {
-    try {
-      await FirebaseAuth.instance.signOut();
-    } catch (e) {
-      logger.e('Error signing out: $e'); 
-    }
+  @override
+  // ignore: library_private_types_in_public_api
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  // ignore: prefer_final_fields
+  bool _isLoggingOut = false;
+
+  // navigate to profile page
+  void goToProfilePage() {
+    Navigator.pop(context);
+
+    // go to profile page
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ProfilePage()),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blue,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            // Handle back navigation
-            Navigator.pop(context);
-          },
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.logout),
-            onPressed: signUserOut,
-          ),
-        ],
-        title: Text('Dashboard'),
+      backgroundColor: Colors.grey.shade200,
+      key: widget._scaffoldKey,
+      appBar: UIAppBar(
+        title: "Dashboard",
+        onMenuTap: () {
+          widget._scaffoldKey.currentState?.openDrawer();
+        },
+        onProfileTap: goToProfilePage,
+        context: context,
       ),
-      body: Center(
-        child: Text("Welcome: ${user.email}"), 
+      drawer: UIDrawer(
+        onLogOut: () => UIAppBar(
+          title: "Dashboard",
+          onMenuTap: () {},
+          onProfileTap: goToProfilePage,
+          context: context,
+        ).signUserOut(context),
+        onProfileTap: goToProfilePage,
+      ),
+      body: Stack(
+        children: [
+          Center(child: Text("Welcome: ${widget.user.email}")),
+          if (_isLoggingOut)
+            LoadingScreen(), // Show loading screen when logging out
+        ],
       ),
     );
   }

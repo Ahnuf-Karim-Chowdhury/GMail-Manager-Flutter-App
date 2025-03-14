@@ -1,11 +1,11 @@
 import 'dart:async';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:gmail_manager/pages/auth.dart';
 import 'package:gmail_manager/services/auth_service.dart';
 
 class VerifyEmailPage extends StatefulWidget {
+  const VerifyEmailPage({super.key});
+
   @override
   // ignore: library_private_types_in_public_api
   _VerifyEmailPageState createState() => _VerifyEmailPageState();
@@ -27,10 +27,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
       FirebaseAuth.instance.currentUser?.reload();
       if (FirebaseAuth.instance.currentUser?.emailVerified == true) {
         timer.cancel();
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => AuthPage()),
-        );
+        Navigator.pushReplacementNamed(context, '/home');
       }
     });
 
@@ -62,8 +59,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
       _countdown = 60;
     });
 
-    // Simulate a network request
-    await Future.delayed(Duration(seconds: 2));
+    await _auth.sendEmailVerificationLink(); // Use your Authservice method to send the email
 
     setState(() {
       _isResending = false;
@@ -118,7 +114,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                         ),
                       )
                     : Text(_countdown > 0
-                        ? 'Resend Verification Email in $_countdown'
+                        ? 'Resend Verification Email in $_countdown seconds'
                         : 'Resend Verification Email'),
               ),
             ],
