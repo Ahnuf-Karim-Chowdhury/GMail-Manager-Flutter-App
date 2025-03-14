@@ -49,6 +49,7 @@ dependencies:
   docx_viewer: ^0.2.1
   dartdoc: ^8.3.3
   googleapis_auth: ^1.6.0
+  archive: ^3.6.1
 
 dev_dependencies:
   flutter_test:

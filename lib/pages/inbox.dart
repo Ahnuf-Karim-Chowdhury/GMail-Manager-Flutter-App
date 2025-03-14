@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/gmail/v1.dart' as gmail;
+import 'package:googleapis/drive/v3.dart' as drive;
 import 'package:http/http.dart' as http;
+import 'package:gmail_manager/services/gmail_service.dart';
+import 'package:gmail_manager/services/file_formating_service.dart';
 
 class EmailPage extends StatefulWidget {
   @override
@@ -9,22 +12,21 @@ class EmailPage extends StatefulWidget {
 }
 
 class _EmailPageState extends State<EmailPage> {
+  final GmailService _gmailService = GmailService();
+  final FileFormattingService _fileFormattingService = FileFormattingService();
   GoogleSignIn _googleSignIn = GoogleSignIn(
-    scopes: [
-      gmail.GmailApi.gmailReadonlyScope,
-    ],
+    scopes: [gmail.GmailApi.gmailReadonlyScope, drive.DriveApi.driveFileScope],
   );
-
   List<gmail.Message> _emails = [];
   bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    _signInAndFetchEmails();
+    _fetchEmails();
   }
 
-  Future<void> _signInAndFetchEmails() async {
+  Future<void> _fetchEmails() async {
     setState(() {
       _isLoading = true;
     });
@@ -32,56 +34,70 @@ class _EmailPageState extends State<EmailPage> {
     try {
       final GoogleSignInAccount? account = await _googleSignIn.signIn();
       if (account != null) {
-        print('User signed in: ${account.email}');
-        final authHeaders = await account.authHeaders;
-        final httpClient = _GoogleHttpClient(authHeaders);
-        final gmailApi = gmail.GmailApi(httpClient);
-
-        final messagesResponse = await gmailApi.users.messages.list('me', q: 'is:inbox', maxResults: 20);
-        final messages = messagesResponse.messages ?? [];
-
-        List<gmail.Message> emailMessages = [];
-        for (var message in messages) {
-          final msg = await gmailApi.users.messages.get('me', message.id!);
-          emailMessages.add(msg);
-        }
-
+        final emails = await _gmailService.fetchEmails();
         setState(() {
-          _emails = emailMessages;
-          print('Fetched ${emailMessages.length} emails');
+          _emails = emails;
+          print('Fetched ${emails.length} emails');
         });
       } else {
         print('Sign in failed');
       }
     } catch (error) {
-      print('Error signing in and fetching emails: $error');
+      print('Error fetching emails: $error');
     } finally {
       setState(() {
         _isLoading = false;
       });
+    }
+
+    @override
+    Widget build(BuildContext context) {
+      // TODO: implement build
+      throw UnimplementedError();
+    }
+  }
+
+  Future<void> _saveEmailToDrive(gmail.Message email) async {
+    try {
+      final authHeaders = await _googleSignIn.currentUser!.authHeaders;
+      final httpClient = _GoogleHttpClient(authHeaders);
+      final driveApi = drive.DriveApi(httpClient);
+
+      await _fileFormattingService.saveEmailToDrive(
+        driveApi,
+        email.snippet!,
+        email.id!,
+      );
+    } catch (error) {
+      print('Error saving email to Google Drive: $error');
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Inbox'),
-      ),
-      body: _isLoading
-          ? Center(child: CircularProgressIndicator())
-          : ListView.builder(
-              itemCount: _emails.length,
-              itemBuilder: (context, index) {
-                final email = _emails[index];
-                final snippet = email.snippet ?? '';
-                final date = DateTime.fromMillisecondsSinceEpoch(int.parse(email.internalDate ?? '0'));
-                return ListTile(
-                  title: Text(snippet),
-                  subtitle: Text(date.toString()),
-                );
-              },
-            ),
+      appBar: AppBar(title: Text('Inbox')),
+      body:
+          _isLoading
+              ? Center(child: CircularProgressIndicator())
+              : ListView.builder(
+                itemCount: _emails.length,
+                itemBuilder: (context, index) {
+                  final email = _emails[index];
+                  final snippet = email.snippet ?? '';
+                  final date = DateTime.fromMillisecondsSinceEpoch(
+                    int.parse(email.internalDate ?? '0'),
+                  );
+                  return ListTile(
+                    title: Text(snippet),
+                    subtitle: Text(date.toString()),
+                    trailing: IconButton(
+                      icon: Icon(Icons.save),
+                      onPressed: () => _saveEmailToDrive(email),
+                    ),
+                  );
+                },
+              ),
     );
   }
 }
